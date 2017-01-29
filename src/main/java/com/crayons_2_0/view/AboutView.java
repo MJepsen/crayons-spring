@@ -421,4 +421,55 @@ public class AboutView extends VerticalLayout implements View {
     public TextField getTxtUserLabel() {
         return txtUserLabel;
     }
+	
+		// Builds filter textfield
+	public static Component buildFilter() {
+		final TextField filter = new TextField();
+		filter.addTextChangeListener(new TextChangeListener() {
+			@Override
+			public void textChange(final TextChangeEvent event) {
+				// refresh tabsheet view
+			}
+		});
+		filter.setInputPrompt("Filter");
+		filter.setIcon(FontAwesome.SEARCH);
+		filter.addStyleName(ValoTheme.TEXTFIELD_INLINE_ICON);
+		return filter;
+	}
+
+	public void refreshTabSheet(TabSheet tabSheet, Iterator<Course> courseList,
+			String search) {
+		// Suchlogik
+	}
+
+	//Lerneinheit speichern - es kann für form und vollständigkeit jaxb annottion angefügt werden
+	public void objektToXml(Unit unit) {
+		try {
+			File file = new File("C:\\example.xml"); //filechooser könnte hier zB rein
+			JAXBContext jaxbContext = JAXBContext.newInstance(Unit.class);
+			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+			jaxbMarshaller.marshal(unit, file);
+			jaxbMarshaller.marshal(unit, System.out);
+
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
+	}
+
+	//Lereinheit laden
+	public Unit xmlToObjekt() {
+		Unit unit = null;
+		try {
+			File file = new File("C:\\file.xml"); //filechooser könnte hier zB rein
+			JAXBContext jaxbContext = JAXBContext.newInstance(Unit.class);
+			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+			unit = (Unit) jaxbUnmarshaller.unmarshal(file);
+			System.out.println(unit);
+
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
+		return unit;
+	}
 }
